@@ -1,0 +1,57 @@
+{% extends 'basic.html' %}
+
+{% block css %}
+<style>
+    h1{
+        text-align: center;
+        font-size: 80px;
+        color: rgb(204, 166, 240);
+        font-weight: 400;
+         font-family: 'Raleway', sans-serif;
+        margin:20px;
+    }
+    h5{
+        margin:10px;
+        color:chartreuse;
+        text-align: center;
+
+    }
+</style>
+
+{% endblock %}
+
+{% block body %}
+    
+    <h1>{{product.product_name}}</h1>
+    <h5>{{product.desc}}</h5>
+    
+    
+  
+    <img src="/media/{{product.image}}" alt="">
+
+    <div id="like-section">
+        {% include 'like_section.html' %}
+    </div>
+    <div id="fav-section">
+        {% include 'fav_section.html' %}
+    </div>
+
+
+{% endblock %}
+    
+
+
+    
+    <!-- <i class="fas fa-heart"></i>
+
+
+    <i class="far fa-heart"></i> -->
+
+    <!-- <div id="favourite-section">
+        <a href="#">
+            <i class="far fa-heart fa-lg"></i>
+        </a>
+    </div>
+    <p>Favourites: {{products.favourites.count}}</p> -->
+
+

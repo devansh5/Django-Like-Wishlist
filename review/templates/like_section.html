@@ -1,0 +1,46 @@
+{% block body %}
+
+<p>{{total_likes}} Like{{total_likes|pluralize}}</p>
+{% if request.user.is_authenticated %}
+    <form action="{%url 'like' %}" method="POST">
+        {% csrf_token %}
+        {% if is_liked %}
+        <button type="submit" id="like" name="product_id" value="{{ product.id }}" class="btn btn-danger">Dislike</button>
+        {% else %}
+        <button type="submit" id="like" name="product_id" value="{{ product.id }}" class="btn btn-primary">Like</button>
+        {% endif %}
+    </form>
+{% endif %}
+{% endblock %}
+
+{% block js %}
+<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+
+<script>
+    $(document).ready(function(event){
+        $(document).on('click','#like',function(event){
+            event.preventDefault();
+            var pk=$(this).attr('value');
+            $.ajax({
+                type:'POST',
+                url:'{% url "like" %}',
+                data:{'id':pk,'csrfmiddlewaretoken':'{{ csrf_token }}'},
+                dataType:'json',
+                success:function(response){
+                    $('#like-section').html(response['form'])
+                    console.log($('#like-section').html(response['form']));
+                },
+                error: function(rs,e){
+                    console.log(rs,responseText);
+                },
+            });
+
+        })
+    })
+</script>
+{% endblock %}
+
+
